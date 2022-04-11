@@ -1,12 +1,25 @@
-name: A workflow for my Hello World file
+# see https://docs.github.com/en/actions
+name: 'Sync data to juejin.com'
+
 on: push
 
 jobs:
-  build:
-    name: Hello world action
+  sync:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: ./action-a
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
         with:
-          MY_NAME: "Mona"
+          # # Set always-auth in npmrc
+          # always-auth: false # optional, default is false
+          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+          node-version: 16.x
+
+      - name: Sync
+        uses: ./
+        with:
+          email: ${{ secrets.JUEJIN_EMAIL }}
+          password: ${{ secrets.JUEJIN_PASSWORD }}

@@ -1,0 +1,19 @@
+name: "Sync Juejie"
+description: "Sync docs to juejin.com"
+author: "daskyrk"
+
+inputs:
+  email:
+    description: 'JueJin login email'
+    required: true
+  password:
+    description: 'JueJin login password'
+    required: true
+
+runs:
+  using: 'node16'
+  main: 'index.js'
+
+branding:
+  icon: "mic"
+  color: 'gray-dark'

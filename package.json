@@ -1,0 +1,25 @@
+{
+  "name": "post-to-juejin",
+  "version": "1.0.0",
+  "description": "post markdown content in pull request to juejin",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "tsc --noEmit & esbuild src/index.ts --bundle --minify --platform=node --outdir=dist --target=node12 --tsconfig=tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "post",
+    "juejin",
+    "sync"
+  ],
+  "author": "daskyrk",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0",
+    "axios": "^0.26.1",
+    "cross-spawn": "^7.0.3",
+    "puppeteer": "^13.5.1"
+  }
+}
