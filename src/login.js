@@ -100,15 +100,19 @@ async function addArticle(title, content) {
   await page.evaluate(() => {
     const node = document.querySelector('.category-list > .item:nth-child(2)')
     node.click()
+    const tagSel = document.querySelector('.tag-input .byte-select__wrap')
+    tagSel.click()
+    const tagSel2 = document.querySelector('.tag-select-add-margin .byte-select-option')
+    tagSel2.click()
   }, content);
   core.info('✅ set category')
 
-  const tagSelect = await page.waitForSelector('.tag-input .byte-select__wrap')
-  core.info('✅ click tag select', tagSelect)
-  await tagSelect.click()
+  // const tagSelect = await page.waitForSelector('.tag-input .byte-select__wrap')
+  // core.info('✅ click tag select', tagSelect)
+  // await tagSelect.click()
 
-  await page.waitForSelector('.tag-select-add-margin .byte-select-option')
-  await page.click('.tag-select-add-margin .byte-select-option')
+  // await page.waitForSelector('.tag-select-add-margin .byte-select-option')
+  // await page.click('.tag-select-add-margin .byte-select-option')
   core.info('✅ set tag')
 
   const summary = await page.waitForSelector('.publish-popup .byte-input__textarea')
