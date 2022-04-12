@@ -4,8 +4,8 @@
   "description": "post markdown content in pull request to juejin",
   "main": "src/index.js",
   "scripts": {
-    "build": "tsc --noEmit & esbuild src/index.ts --bundle --minify --platform=node --outdir=dist --target=node12 --tsconfig=tsconfig.json",
-    "watch": "tsc -p tsconfig.json -w",
+    "start": "node dist/index.js",
+    "build": "esbuild src/index.js --bundle --minify --platform=node --outdir=dist --target=node16 --tsconfig=tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -21,5 +21,8 @@
     "axios": "^0.26.1",
     "cross-spawn": "^7.0.3",
     "puppeteer": "^13.5.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.34"
   }
 }

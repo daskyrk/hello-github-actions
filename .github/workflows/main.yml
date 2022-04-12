@@ -1,5 +1,5 @@
 # see https://docs.github.com/en/actions
-name: 'Sync data to juejin.com'
+name: 'Sync data to juejin.cn'
 
 on: push
 
@@ -13,10 +13,8 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
         with:
-          # # Set always-auth in npmrc
-          # always-auth: false # optional, default is false
-          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: 16.x
+      - run: npm install
 
       - name: Sync
         uses: ./

@@ -24,7 +24,17 @@ async function run(email, password) {
   });
   page = await browser.newPage();
   await page.setViewport({ width: 1400, height: 900 })
-  await page.goto('https://juejin.cn/');
+  core.info('✅ start navigation to juejin')
+  let tryTimes = 10;
+  while (tryTimes-- > 0) {
+    try {
+      await page.goto('https://juejin.cn/');
+      tryTimes = -1;
+    } catch (e) {
+      core.warning('❌ navigation to juejin.cn failed, retry')
+      continue;
+    }
+  }
   // 2.打开登录页面
   const loginBtn = await page.waitForSelector('.login-button')
   await loginBtn.click()
@@ -61,7 +71,16 @@ async function addArticle(title, content) {
     core.error('❌ article content length must > 50');
     return;
   }
-  await page.goto('https://juejin.cn/editor/drafts/new?v=2');
+  let tryTimes = 10;
+  while (tryTimes-- > 0) {
+    try {
+      await page.goto('https://juejin.cn/editor/drafts/new?v=2');
+      tryTimes = -1;
+    } catch (e) {
+      core.warning('❌ navigation to editor page failed, retry')
+      continue;
+    }
+  }
   const titleElement = await page.waitForSelector('.title-input');
   await titleElement.type(title, { delay: 100 });
   core.info('✅ set title')
@@ -78,17 +97,24 @@ async function addArticle(title, content) {
 
   // frontend tag
   await page.waitForSelector('.category-list > .item')
-  await page.evaluate(() => {
-    const node = document.querySelector('.category-list > .item:nth-child(2)')
-    node.click()
-  }, content);
-  core.info('✅ set category')
+  const els = await page.evaluate(() => {
+    const categorySel = document.querySelector('.category-list > .item:nth-child(2)')
+    categorySel.click()
+    const tagSel = document.querySelector('.tag-input .byte-select__wrap')
+    tagSel.click()
+    const tagSel2 = document.querySelector('.tag-select-add-margin .byte-select-option')
+    tagSel2.click()
+    return [categorySel, tagSel, tagSel2]
+  });
+  core.info('els', els);
 
-  await page.waitForSelector('.tag-input > .select-plus')
-  await page.click('.tag-input > .select-plus')
-  await page.waitForSelector('.tag-select-add-margin .byte-select-option')
-  await page.click('.tag-select-add-margin .byte-select-option')
-  core.info('✅ set tag')
+  // const tagSelect = await page.waitForSelector('.tag-input .byte-select__wrap')
+  // core.info('✅ click tag select', tagSelect)
+  // await tagSelect.click()
+
+  // await page.waitForSelector('.tag-select-add-margin .byte-select-option')
+  // await page.click('.tag-select-add-margin .byte-select-option')
+  // core.info('✅ set tag')
 
   const summary = await page.waitForSelector('.publish-popup .byte-input__textarea')
   await summary.evaluate((node, _content) => {
@@ -97,8 +123,12 @@ async function addArticle(title, content) {
   await summary.type('...', { delay: 100 });
   core.info('✅ set summary')
 
-  await page.waitForSelector('.footer > .btn-container > .primary')
-  await page.click('.footer > .btn-container > .primary')
+  const publishBtnEl = await page.evaluate((log) => {
+    const publishBtn = document.querySelector('.footer > .btn-container > .primary')
+    publishBtn.click()
+    return publishBtn;
+  });
+  core.info('publishBtnEl', publishBtnEl);
   core.info('✅ publishing')
 
   await timeout(3000);
@@ -141,7 +171,7 @@ async function snapshotAndGetData() {
   });
   core.info('✅ copy big image')
 
-  await timeout(1000);
+  await timeout(2000);
   const originalSizeImage = await page.waitForSelector('#originalSizeImage');
   // 截图后转为 base64 的图片
   const data = await originalSizeImage.screenshot();
@@ -220,7 +250,7 @@ async function calculateDistance() {
         const before = pixelData[pixelData.length - 1];
         const diff = before - average;
         if (diff > 150) {
-          core.info("gap: ", pixelData[pixelData.length - 1], average);
+          console.log("gap: ", pixelData[pixelData.length - 1], average);
           gap.push(index / 4);
         }
         pixelData.push(average);
@@ -352,7 +382,7 @@ async function drag(distance) {
   await page.mouse.move(x + distance1 + distance2 - smallImagePadding, y, { steps: 5 })
   await timeout(800);
   await page.mouse.up()
-  await page.waitForNavigation({ timeout: 10000 });
+  await timeout(5000);
   // 成功后可以找到头像图片
   return page.$('img.avatar')
 }

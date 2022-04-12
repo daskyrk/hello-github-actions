@@ -1,5 +1,5 @@
 name: "Sync Juejie"
-description: "Sync docs to juejin.com"
+description: "Sync docs to juejin.cn"
 author: "daskyrk"
 
 inputs:
