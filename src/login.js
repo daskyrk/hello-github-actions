@@ -221,7 +221,7 @@ async function calculateDistance() {
         const before = pixelData[pixelData.length - 1];
         const diff = before - average;
         if (diff > 150) {
-          core.info("gap: ", pixelData[pixelData.length - 1], average);
+          console.log("gap: ", pixelData[pixelData.length - 1], average);
           gap.push(index / 4);
         }
         pixelData.push(average);
