@@ -104,7 +104,7 @@ async function addArticle(title, content) {
     tagSel.click()
     const tagSel2 = document.querySelector('.tag-select-add-margin .byte-select-option')
     tagSel2.click()
-  }, content);
+  });
   core.info('✅ set category')
 
   // const tagSelect = await page.waitForSelector('.tag-input .byte-select__wrap')
@@ -122,8 +122,10 @@ async function addArticle(title, content) {
   await summary.type('...', { delay: 100 });
   core.info('✅ set summary')
 
-  await page.waitForSelector('.footer > .btn-container > .primary')
-  await page.click('.footer > .btn-container > .primary')
+  await page.evaluate(() => {
+    const publishBtn = document.querySelector('.footer > .btn-container > .primary')
+    publishBtn.click()
+  });
   core.info('✅ publishing')
 
   await timeout(3000);
