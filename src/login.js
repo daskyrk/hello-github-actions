@@ -103,11 +103,10 @@ async function addArticle(title, content) {
   }, content);
   core.info('✅ set category')
 
-  await page.waitForSelector('.tag-input > .select-plus')
-  await page.click('.tag-input > .select-plus')
+  await page.waitForSelector('.tag-input > .byte-select__wrap')
+  await page.click('.tag-input > .byte-select__wrap')
   core.info('✅ click tag select')
 
-  await timeout(1000);
   await page.waitForSelector('.tag-select-add-margin .byte-select-option')
   await page.click('.tag-select-add-margin .byte-select-option')
   core.info('✅ set tag')
