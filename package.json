@@ -4,7 +4,8 @@
   "description": "post markdown content in pull request to juejin",
   "main": "src/index.js",
   "scripts": {
-    "build": "esbuild src/index.js --bundle --minify --platform=node --outdir=dist --target=node12 --tsconfig=tsconfig.json",
+    "start": "node dist/index.js",
+    "build": "esbuild src/index.js --bundle --minify --platform=node --outdir=dist --target=node16 --tsconfig=tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
