@@ -103,8 +103,8 @@ async function addArticle(title, content) {
   }, content);
   core.info('✅ set category')
 
-  await page.waitForSelector('.tag-input > .byte-select__wrap')
-  await page.click('.tag-input > .byte-select__wrap')
+  await page.waitForSelector('.tag-input .byte-select__wrap')
+  await page.click('.tag-input .byte-select__wrap')
   core.info('✅ click tag select')
 
   await page.waitForSelector('.tag-select-add-margin .byte-select-option')
