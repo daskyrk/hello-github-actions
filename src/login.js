@@ -30,7 +30,7 @@ async function run(email, password) {
     try {
       await page.goto('https://juejin.cn/');
     } catch (e) {
-      core.error('❌ navigation failed, retry')
+      core.warning('❌ navigation failed, retry')
       continue;
     }
   }
@@ -70,7 +70,15 @@ async function addArticle(title, content) {
     core.error('❌ article content length must > 50');
     return;
   }
-  await page.goto('https://juejin.cn/editor/drafts/new?v=2');
+  let tryTimes = 3;
+  while (tryTimes-- > 0) {
+    try {
+      await page.goto('https://juejin.cn/editor/drafts/new?v=2');
+    } catch (e) {
+      core.warning('❌ navigation failed, retry')
+      continue;
+    }
+  }
   const titleElement = await page.waitForSelector('.title-input');
   await titleElement.type(title, { delay: 100 });
   core.info('✅ set title')
