@@ -24,6 +24,7 @@ async function run(email, password) {
   });
   page = await browser.newPage();
   await page.setViewport({ width: 1400, height: 900 })
+  core.info('✅ start navigation to juejin')
   await page.goto('https://juejin.cn/');
   // 2.打开登录页面
   const loginBtn = await page.waitForSelector('.login-button')
