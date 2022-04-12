@@ -105,6 +105,9 @@ async function addArticle(title, content) {
 
   await page.waitForSelector('.tag-input > .select-plus')
   await page.click('.tag-input > .select-plus')
+  core.info('✅ click tag select')
+
+  await timeout(1000);
   await page.waitForSelector('.tag-select-add-margin .byte-select-option')
   await page.click('.tag-select-add-margin .byte-select-option')
   core.info('✅ set tag')
