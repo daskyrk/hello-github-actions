@@ -160,7 +160,7 @@ async function snapshotAndGetData() {
   });
   core.info('✅ copy big image')
 
-  await timeout(1000);
+  await timeout(2000);
   const originalSizeImage = await page.waitForSelector('#originalSizeImage');
   // 截图后转为 base64 的图片
   const data = await originalSizeImage.screenshot();
