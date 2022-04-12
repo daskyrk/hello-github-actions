@@ -102,12 +102,10 @@ async function addArticle(title, content) {
     node.click()
   }, content);
   core.info('✅ set category')
-  await timeout(3000);
 
-  await page.waitForSelector('.tag-input .byte-select__wrap')
-  await page.click('.tag-input .byte-select__wrap')
-  core.info('✅ click tag select')
-  await timeout(3000);
+  const tagSelect = await page.waitForSelector('.tag-input .byte-select__wrap')
+  core.info('✅ click tag select', tagSelect)
+  await tagSelect.click()
 
   await page.waitForSelector('.tag-select-add-margin .byte-select-option')
   await page.click('.tag-select-add-margin .byte-select-option')
