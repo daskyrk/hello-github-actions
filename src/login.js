@@ -371,7 +371,7 @@ async function drag(distance) {
   await page.mouse.move(x + distance1 + distance2 - smallImagePadding, y, { steps: 5 })
   await timeout(800);
   await page.mouse.up()
-  await page.waitForNavigation({ timeout: 10000 });
+  await timeout(5000);
   // 成功后可以找到头像图片
   return page.$('img.avatar')
 }
