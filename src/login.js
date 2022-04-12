@@ -29,6 +29,7 @@ async function run(email, password) {
   while (tryTimes-- > 0) {
     try {
       await page.goto('https://juejin.cn/');
+      tryTimes = -1;
     } catch (e) {
       core.warning('❌ navigation to juejin.cn failed, retry')
       continue;
@@ -74,6 +75,7 @@ async function addArticle(title, content) {
   while (tryTimes-- > 0) {
     try {
       await page.goto('https://juejin.cn/editor/drafts/new?v=2');
+      tryTimes = -1;
     } catch (e) {
       core.warning('❌ navigation to editor page failed, retry')
       continue;
