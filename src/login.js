@@ -97,17 +97,16 @@ async function addArticle(title, content) {
 
   // frontend tag
   await page.waitForSelector('.category-list > .item')
-  await page.evaluate((log) => {
+  const els = await page.evaluate(() => {
     const categorySel = document.querySelector('.category-list > .item:nth-child(2)')
     categorySel.click()
-    categorySel && log('✅ set category')
     const tagSel = document.querySelector('.tag-input .byte-select__wrap')
     tagSel.click()
-    tagSel && log('✅ click tag select')
     const tagSel2 = document.querySelector('.tag-select-add-margin .byte-select-option')
     tagSel2.click()
-    tagSel2 && log('✅ set tag')
-  }, core.info);
+    return [categorySel, tagSel, tagSel2]
+  });
+  core.info('els', els);
 
   // const tagSelect = await page.waitForSelector('.tag-input .byte-select__wrap')
   // core.info('✅ click tag select', tagSelect)
@@ -124,11 +123,12 @@ async function addArticle(title, content) {
   await summary.type('...', { delay: 100 });
   core.info('✅ set summary')
 
-  await page.evaluate((log) => {
+  const publishBtnEl = await page.evaluate((log) => {
     const publishBtn = document.querySelector('.footer > .btn-container > .primary')
     publishBtn.click()
-    publishBtn && log('✅ click button')
-  }, core.info);
+    return publishBtn;
+  });
+  core.info('publishBtnEl', publishBtnEl);
   core.info('✅ publishing')
 
   await timeout(3000);
