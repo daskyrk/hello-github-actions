@@ -1,5 +1,5 @@
 # see https://docs.github.com/en/actions
-name: 'Sync data to juejin.com'
+name: 'Sync data to juejin.cn'
 
 on: push
 

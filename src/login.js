@@ -25,12 +25,12 @@ async function run(email, password) {
   page = await browser.newPage();
   await page.setViewport({ width: 1400, height: 900 })
   core.info('✅ start navigation to juejin')
-  let tryTimes = 3;
+  let tryTimes = 10;
   while (tryTimes-- > 0) {
     try {
       await page.goto('https://juejin.cn/');
     } catch (e) {
-      core.warning('❌ navigation failed, retry')
+      core.warning('❌ navigation to juejin.cn failed, retry')
       continue;
     }
   }
@@ -70,12 +70,12 @@ async function addArticle(title, content) {
     core.error('❌ article content length must > 50');
     return;
   }
-  let tryTimes = 3;
+  let tryTimes = 10;
   while (tryTimes-- > 0) {
     try {
       await page.goto('https://juejin.cn/editor/drafts/new?v=2');
     } catch (e) {
-      core.warning('❌ navigation failed, retry')
+      core.warning('❌ navigation to editor page failed, retry')
       continue;
     }
   }
